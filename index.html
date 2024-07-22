@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eNull Listings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            background: #444;
+            color: #fff;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+        .sidebars {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        }
+        .sidebar {
+            width: 200px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: absolute;
+        }
+        .real-estate-sidebar {
+            height: 2731.2px;
+            top: 0;
+        }
+        .vehicles-sidebar {
+            height: 2731.2px;
+            top: 2731.2px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 220px; /* Space for the sidebars */
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        .category-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        .category-list a {
+            text-decoration: none;
+            color: #333;
+        }
+        .category-list a:hover {
+            color: #007bff;
+        }
+        .post-ad-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .post-ad-button:hover {
+            background-color: #0056b3;
+        }
+        .form-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .form-container input, .form-container select, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 5px;
+        }
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+        .modal-body {padding: 2px 16px;}
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #ad {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .listing-item {
+            width: 728px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .listing-item img {
+            width: 150px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .listing-info {
+            width: 555px;
+            height: 120px;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .listing-info h3, .listing-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>eNull Listings</h1>
+    </header>
+    <nav>
+        <a href="#real-estate">Real Estate</a>
+        <a href="#vehicles">Vehicles</a>
+    </nav>
+    <div class="main-content">
+        <div class="sidebars">
+            <aside class="sidebar real-estate-sidebar">
+                <h2>Real Estate Categories</h2>
+                <ul class="category-list">
+                    <li><a href="#">Single Family Homes</a></li>
+                    <li><a href="#">Apartments for Rent</a></li>
+                    <li><a href="#">Condos for Sale</a></li>
+                    <li><a href="#">Townhouses</a></li>
+                    <li><a href="#">Land for Sale</a></li>
+                    <li><a href="#">Commercial Real Estate</a></li>
+                    <li><a href="#">Vacation Homes</a></li>
+                    <li><a href="#">Luxury Estates</a></li>
+                    <li><a href="#">Farm Properties</a></li>
+                    <li><a href="#">Rental Properties</a></li>
+                    <li><a href="#">Foreclosures</a></li>
+                    <li><a href="#">Short-term Rentals</a></li>
+                    <li><a href="#">Student Housing</a></li>
+                    <li><a href="#">Senior Living</a></li>
+                    <li><a href="#">Mobile Homes</a></li>
+                    <li><a href="#">Investment Properties</a></li>
+                    <li><a href="#">Multi-family Homes</a></li>
+                    <li><a href="#">Beachfront Properties</a></li>
+                    <li><a href="#">Lakefront Properties</a></li>
+                    <li><a href="#">Historical Homes</a></li>
+                </ul>
+            </aside>
+            <aside class="sidebar vehicles-sidebar">
+                <h2>Vehicles for Sale Categories</h2>
+                <ul class="category-list">
+                    <li><a href="#">Sedans</a></li>
+                    <li><a href="#">SUVs</a></li>
+                    <li><a href="#">Trucks</a></li>
+                    <li><a href="#">Motorcycles</a></li>
+                    <li><a href="#">ATVs</a></li>
+                    <li><a href="#">Boats</a></li>
+                    <li><a href="#">RVs</a></li>
+                    <li><a href="#">Luxury Cars</a></li>
+                    <li><a href="#">Classic Cars</a></li>
+                    <li><a href="#">Electric Vehicles</a></li>
+                    <li><a href="#">Hybrid Cars</a></li>
+                    <li><a href="#">Vans</a></li>
+                    <li><a href="#">Commercial Vehicles</a></li>
+                    <li><a href="#">Trailers</a></li>
+                    <li><a href="#">Car Parts</a></li>
+                    <li><a href="#">Accessories</a></li>
+                    <li><a href="#">Used Cars</a></li>
+                    <li><a href="#">New Cars</a></li>
+                    <li><a href="#">Convertibles</a></li>
+                    <li><a href="#">Sports Cars</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="content">
+            <div class="section">
+                <button id="post-ad-btn" class="post-ad-button">Post a Listing</button>
+                <div id="ad">
+                    <!-- Listings will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> eNull. All rights reserved.</p>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Submit a New Listing</h2>
+            </div>
+            <div class="modal-body">
+                <form id="listing-form">
+                    <label for="listing-title">Listing Title:</label>
+                    <input type="text" id="listing-title" name="listing-title" required>
+                    
+                    <label for="listing-category">Category:</label>
+                    <select id="listing-category" name="listing-category" required>
+                        <option value="single-family-homes">Single Family Homes</option>
+                        <option value="apartments-for-rent">Apartments for Rent</option>
+                        <option value="condos-for-sale">Condos for Sale</option>
+                        <option value="townhouses">Townhouses</option>
+                        <option value="land-for-sale">Land for Sale</option>
+                        <option value="sedans">Sedans</option>
+                        <option value="suvs">SUVs</option>
+                        <option value="trucks">Trucks</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    
+                    <label for="listing-description">Description:</label>
+                    <textarea id="listing-description" name="listing-description" rows="4" required></textarea>
+                    
+                    <label for="listing-price">Price:</label>
+                    <input type="number" id="listing-price" name="listing-price" required>
+                    
+                    <label for="listing-image">Image URL:</label>
+                    <input type="url" id="listing-image" name="listing-image">
+                    
+                    <button type="submit">Submit Listing</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("modal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("post-ad-btn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Get the form and listings section
+        var form = document.getElementById("listing-form");
+        var adSection = document.getElementById("ad");
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Handle form submission
+        form.onsubmit = function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form data
+            var title = document.getElementById("listing-title").value;
+            var category = document.getElementById("listing-category").value;
+            var description = document.getElementById("listing-description").value;
+            var price = document.getElementById("listing-price").value;
+            var image = document.getElementById("listing-image").value;
+
+            // Create a new listing element
+            var listing = document.createElement("div");
+            listing.className = "listing-item";
+            listing.innerHTML = `
+                <img src="${image}" alt="${title}">
+                <div class="listing-info">
+                    <h3>${title}</h3>
+                    <p><strong>Category:</strong> ${category}</p>
+                    <p><strong>Description:</strong> ${description}</p>
+                    <p><strong>Price:</strong> $${price}</p>
+                </div>
+            `;
+
+            // Append the new listing to the #ad section
+            adSection.appendChild(listing);
+
+            // Close the modal
+            modal.style.display = "none";
+
+            // Reset the form
+            form.reset();
+        };
+
+        // Update copyright year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
